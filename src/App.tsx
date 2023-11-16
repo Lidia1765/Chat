@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { inputChat } from './input'
 
@@ -10,10 +8,13 @@ function App() {
   };
 
   return (
-    <input
-      value={inputChat}
-    />
+    <div className="App">
+      <h1>Chat</h1>
+      <input
+        value={inputChat}
+      />
+    </div>
   )
 }
 
-export default App
+export default App;
