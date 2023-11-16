@@ -1,18 +1,12 @@
 import { useState } from 'react'
 import './App.css'
-import { inputChat } from './input'
+import { InputChat } from './InputChat'
 
 function App() {
-  type Props = {
-    inputChat: String
-  };
-
   return (
     <div className="App">
       <h1>Chat</h1>
-      <input
-        value={inputChat}
-      />
+      <InputChat />
     </div>
   )
 }
