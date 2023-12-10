@@ -1,47 +1,29 @@
 import React from "react";
-import { configureStore } from '@reduxjs/toolkit';
-import { messageSliceReducer } from './Message'
+import { useDispatch } from 'react-redux';
+import { FormEvent } from 'react';
+import { addMessage } from '../stores/message';
 
-type Message = {
-    type: 'sent' | 'received',
-    author: string,
-    text: string,
-    date: string
-}
-
-export type RootState = ReturnType<typeof store.getState>;
 
 export function InputChat() {
-    const [input, setInput] = React.useState('');
-    const [answer, setAnswer] = React.useState('');
-    const [loading, setLoading] = React.useState(true);
+    const [messageInput, setMessageInput] = React.useState('');
+    const dispatch = useDispatch();
 
-    const store = configureStore({
-        reducer: {
-            messages: messageSliceReducer
-        }
-    });
-
-    React.useEffect(() => {
-        if (Message.type.sent)
-            fetch('https://explain-ai-chatbot-81517f.zapier.app/explainai-chatbot')
-                .then(res => res.json())
-                .then(json => setAnswer(json.data))
-                .catch(err => {
-                    console.log(err),
-                        alert(`Error: ${err.message}`)
-                })
-                .finally(() => setLoading(false))
-    }, [messages])
+    const sentMessage = (e: FormEvent) => {
+        e.preventDefault();
+        dispatch(addMessage({ text: messageInput, type: 'sent' }));
+        setMessageInput('');
+    }
 
     return (
-        <form>
+        <form
+            onSubmit={sentMessage}
+            className="form">
             <input
                 className="input"
                 type="text"
                 placeholder="Введите текст"
-                value={input}
-                onInput={(e) => { setInput((e.target as HTMLInputElement).value) }}
+                value={messageInput}
+                onInput={(e) => { setMessageInput((e.target as HTMLInputElement).value) }}
             />
             <button type="submit">
                 Отправить

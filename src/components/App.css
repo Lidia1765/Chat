@@ -1,8 +1,15 @@
+body{
+  display: block!important;
+  background-image: url('../pictures/background.jpg');
+}
+
 #root {
-  max-width: 1280px;
+  max-width: 85%;
+  height: 100vh;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  display: block;
+  background-color: rgb(251, 251, 251);
+  border: 2px solid rgb(82, 2, 82);
 }
 
 .logo {
@@ -39,4 +46,105 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.App{
+  max-height: 100%;
+  height: 100vh;
+}
+
+.window{
+  overflow-y: scroll;
+  height: 100vh;
+  max-height: 85vh;
+}
+
+.window::-webkit-scrollbar-thumb{
+  background-color: plum;
+}
+
+.ul{
+  margin: 0;
+  padding: 0;
+}
+
+.h1{
+  margin: 0;
+  font-size: 20px;
+  color: white;
+  padding-top: 2vh;
+  padding-left: 30px;
+}
+
+header{
+  background-color: purple;
+  height: 7vh;
+  width: 100%;
+}
+
+.form{
+  width: 85%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+}
+
+.input{
+  width: 100%;
+  padding: 15px 7px;
+}
+
+.sent{
+  background-color: plum;
+  list-style: none;
+  width: 300px;
+  margin-top: 30px;
+  margin: 30px 30px 0 auto;
+  padding: 20px;
+  text-align: center;
+  font-weight: 500;
+  color: #fff;
+  position: relative;
+  font-size: 18px;
+  border-radius: 13px;
+}
+
+.sent::before{
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid plum;
+  border-right: 10px solid transparent;
+  border-top: 10px solid plum;
+  border-bottom: 10px solid transparent;
+  right: -19px;
+}
+
+.recived{  
+  background-color: pink;
+  list-style: none;
+  width: 300px;
+  margin-top: 30px;
+  margin: 30px auto 0 30px;
+  padding: 20px;
+  text-align: center;
+  font-weight: 500;
+  color: #fff;
+  position: relative;
+  font-size: 18px;
+  border-radius: 13px;
+}
+
+.recived::before{
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid pink;
+  border-top: 10px solid pink;
+  border-bottom: 10px solid transparent;
+  left: -19px;
 }

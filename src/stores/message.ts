@@ -6,10 +6,10 @@ const initialState: State = { count: 0, messages: [] }
 export const messageSlice = createSlice({
     name: "messages",
     initialState,
-    reducer: {
+    reducers: {
         addMessage: (state, action) => {
             state.count = state.count + 1;
-            state.messages = [{ text: action.payload.text, id: crypto.randomUUID() }, ...state.messages];
+            state.messages = [...state.messages, { text: action.payload.text, id: crypto.randomUUID(), type: 'sent', author: '', date: '' }];
         }
     }
 });
