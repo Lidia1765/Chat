@@ -7,14 +7,22 @@ import type { RootState } from '../stores/index';
 
 type Props = {
     text: string
+    author: string
+    date: string
 }
 
 export function Message(props: Props) {
 
     return (
         <article>
+            <address>
+                {props.author}
+            </address>
             <p>
                 {props.text}
+            </p>
+            <p>
+                {props.date}
             </p>
         </article>
     )
