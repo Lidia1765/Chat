@@ -5,54 +5,40 @@ import { messageSlice, addMessage, messageSliceReducer } from '../stores/message
 import type { Message as MessageType, State } from '../stores/types';
 import { Message } from './Message';
 import type { RootState } from '../stores/index';
-import OpenAI from 'openai';
-
-curl https://api.openai.com/v1/chat/completions \
--H 'Content-Type: application/json' \
--H 'Authorization: Bearer org-Fe1llPEA1liDWSdCOzq1rla8' \
--d '{
-'model': 'gpt-3.5-turbo',
-    'messages': [{
-        'role': 'system',
-        'content': 'You will be provided with a message, and your task is to answer the question'
-    }],
-        'temperature': 0.7
-    }'
+import { Loading } from './Loading';
+import { openai } from '../openai';
 
 export function ChatWindow() {
     const messages = useSelector<RootState, MessageType[]>(state => state.messages.messages);
-    console.log(messages);
-    const [loading, setLoading] = React.useState(true);
+    //[loading, setLoading] = React.useState(true);
+    const dispatch = useDispatch();
 
-    const openai = new OpenAI({
-        apiKey: process.env.org - Fe1llPEA1liDWSdCOzq1rla8
-    });
-
-    const response = await openai.chat.completions.create({
-        model: 'gpt-4',
-        messages: [
-            {
-                'role': 'system',
-                'content': 'You will be provided with a message, and your task is to answer the question'
-            }
-        ],
-        temperature: 0.8,
-        max_tokens: 64,
-        top_p: 1
-    });
+    const messageDate = new Date();
+    const messageDateTime = messageDate.toLocaleDateString() +
+        ' в ' + messageDate.toLocaleTimeString();
 
     React.useEffect(() => {
+        if (messages.length === 0) return
         const lastMessage = messages[messages.length - 1]
-        if (lastMessage.type)
-            fetch(response)
-                .then(res => res.json())
-                .then(json => (json.data))
-                .catch(err => {
-                    console.log(err),
-                        alert(`Error: ${err.message}`)
+        if (lastMessage.type === 'user') {
+            openai.chat.completions.create({
+                model: 'gpt-3.5-turbo',
+                messages: [
+                    {
+                        'role': 'user',
+                        'content': lastMessage.text
+                    }
+                ],
+            })
+                .then((data) => {
+                    console.log(data)
+                    dispatch(addMessage({ text: data.choices[0].message.content, type: 'gpt', author: 'GTP 3.5' }));
                 })
-                .finally(() => setLoading(false))
-    }, [messages])
+                .finally(() => {
+                    <Loading />
+                })
+        }
+    }, [messages]);
 
     return (
         <ul className='ul'>
@@ -60,9 +46,13 @@ export function ChatWindow() {
                 <li
                     className={type}
                     key={id}
+                    title={author}
                 >
+                    {author}
                     <Message
-                        text={text} />
+                        text={text}
+                    />
+                    {messageDateTime}
                 </li>
             ))}
         </ul>

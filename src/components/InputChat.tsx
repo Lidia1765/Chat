@@ -10,7 +10,7 @@ export function InputChat() {
 
     const sentMessage = (e: FormEvent) => {
         e.preventDefault();
-        dispatch(addMessage({ text: messageInput, type: 'sent' }));
+        dispatch(addMessage({ text: messageInput, type: 'user', author: 'User' }));
         setMessageInput('');
     }
 

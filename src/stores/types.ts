@@ -5,8 +5,8 @@ export type State = {
 
 export type Message = {
     id: string,
-    type: 'sent' | 'received',
-    author: string,
+    type: 'user' | 'gpt',
+    author: 'User' | 'GTP 3.5',
     text: string,
     date: string
 }

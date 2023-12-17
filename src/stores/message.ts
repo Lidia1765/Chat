@@ -9,7 +9,7 @@ export const messageSlice = createSlice({
     reducers: {
         addMessage: (state, action) => {
             state.count = state.count + 1;
-            state.messages = [...state.messages, { text: action.payload.text, id: crypto.randomUUID(), type: 'sent', author: '', date: '' }];
+            state.messages = [...state.messages, { text: action.payload.text, id: crypto.randomUUID(), type: action.payload.type, author: action.payload.author, date: action.payload.date }];
         }
     }
 });
